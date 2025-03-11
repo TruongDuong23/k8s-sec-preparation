@@ -159,7 +159,7 @@ Penetration Testing (or pen testing) is a simulated cyber attack against a compu
 5. **Reporting**: Tools often provide detailed reports that help organizations understand their security status and prioritize remediation efforts.
 
  
-- **Demo:**  
+**Demo:**  
   - kube-bench (CIS Benchmark Testing)
     
    **kube-bench** is a tool that checks whether Kubernetes is deployed securely by running the CIS Kubernetes Benchmark tests. It automates the process of evaluating the security configuration of a Kubernetes cluster against the CIS Benchmark recommendations.
@@ -209,14 +209,68 @@ Penetration Testing (or pen testing) is a simulated cyber attack against a compu
 
 ## Module 4. Code Security  
 ### 1. Vulnerability Scanning & Intrusion Detection  
-- What it does?  (Definitions, Threats, Benefits)
+
+**Definitions:**
+- **Vulnerability Scanning:** The process of identifying security weaknesses and flaws in systems, applications, or networks. It involves automated tools that scan for known vulnerabilities, misconfigurations, and outdated software.
+- **Intrusion Detection:** The practice of monitoring systems or networks for malicious activity or policy violations. It can be done using Intrusion Detection Systems (IDS) that analyze traffic and log data to detect suspicious behavior.
+
+**Threats:**
+- Exploitation of unpatched software vulnerabilities.
+- Unauthorized access to systems or data.
+- Malware infections or ransomware attacks.
+- Insider threats or accidental misconfigurations.
+
+**Benefits:**
+- Proactively identifies and mitigates security risks.
+- Reduces the attack surface by addressing vulnerabilities.
+- Enhances compliance with security standards and regulations.
+- Provides real-time alerts for potential intrusions or breaches.
+
 
 ### 2. Scanning Container Images for CVEs  
 - What is CVE?
+
+CVE (Common Vulnerabilities and Exposures): A publicly disclosed list of known cybersecurity vulnerabilities and exposures. Each CVE entry includes a unique identifier, a description of the vulnerability, and references to related information. CVEs help organizations identify and address known vulnerabilities in their software and systems.
+  
 - **CVE Scanning with Trivy** (Scans container images for known CVEs)  
 
+**Trivy** is an open-source vulnerability scanner designed specifically for container images and file systems. It scans for known CVEs in container images, identifying vulnerabilities in the software packages and libraries included in the image.
+
+**How it works:**
+1. Trivy scans container images for installed packages, libraries, and configurations.
+2. It cross-references these components with the CVE database.
+3. It generates a report listing vulnerabilities, their severity (e.g., critical, high, medium), and remediation recommendations.
+
+**Benefit:**
+- Ensures container images are free from known vulnerabilities before deployment.
+- Integrates seamlessly into CI/CD pipelines for automated security checks.
+- Supports multiple platforms, including Docker, Kubernetes, and AWS ECR.
+
 ### 3. Runtime Intrusion Detection  
-- **Project Falco** and Intrusion Detection (Detecting abnormal behavior in clusters)  
+- **Project Falco** and Intrusion Detection (Detecting abnormal behavior in clusters)
+
+**Project Falco:** An open-source runtime security tool designed for cloud-native environments. It specializes in detecting abnormal behavior in containers, Kubernetes clusters, and hosts.
+
+**How it works:**
+1. Falco uses a kernel module or eBPF (Extended Berkeley Packet Filter) to monitor system calls and events in real time.
+2. It applies customizable rules to detect suspicious activities, such as:
+   - Unauthorized process execution.
+   - File system modifications.
+   - Network connections to malicious IPs.  
+3. Alerts are generated and sent to security teams for investigation.
+
+**Key Features:**
+- Real-time monitoring and detection of runtime threats.
+- Integration with Kubernetes for cluster-wide visibility.
+- Extensible rule engine for custom security policies.
+
+**Benefits:**
+- Provides deep visibility into container and host activities.
+- Helps detect zero-day exploits and advanced threats.
+- Enhances the security posture of cloud-native applications.
+
+
+
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -243,74 +297,6 @@ Penetration Testing (or pen testing) is a simulated cyber attack against a compu
 
 
 ------------------------------------------------------------------------------------------------------
-
-
-Module 4: Code Security
-1. Vulnerability Scanning & Intrusion Detection
-What it Does:
-
-Vulnerability Scanning: This is the process of identifying, quantifying, and prioritizing vulnerabilities in a system. It involves using automated tools to scan systems, applications, and networks for known vulnerabilities, misconfigurations, and weaknesses that could be exploited by attackers.
-
-Intrusion Detection: This refers to the monitoring of systems and networks for malicious activities or policy violations. Intrusion detection systems (IDS) analyze traffic patterns and system behaviors to detect potential security breaches.
-
-Definitions:
-
-Vulnerability Scanning: A proactive security measure that identifies vulnerabilities in software, hardware, and network configurations.
-Intrusion Detection: A reactive security measure that monitors and analyzes system activities to detect unauthorized access or anomalies.
-Threats:
-
-Vulnerability Scanning Threats: False positives, incomplete scans, and the potential for attackers to exploit the scanning process to gather information about the system.
-Intrusion Detection Threats: Evasion techniques used by attackers to bypass detection, such as encryption or obfuscation of malicious traffic.
-Benefits:
-
-Vulnerability Scanning:
-
-Identifies security weaknesses before they can be exploited.
-Helps organizations prioritize remediation efforts based on risk.
-Supports compliance with regulatory requirements and industry standards.
-Intrusion Detection:
-
-Provides real-time monitoring and alerts for suspicious activities.
-Helps organizations respond quickly to potential security incidents.
-Enhances overall security posture by providing visibility into network and system activities.
-2. Scanning Container Images for CVEs
-What is CVE?
-
-CVE (Common Vulnerabilities and Exposures): A publicly disclosed list of known cybersecurity vulnerabilities and exposures. Each CVE entry includes a unique identifier, a description of the vulnerability, and references to related information. CVEs help organizations identify and address known vulnerabilities in their software and systems.
-CVE Scanning with Trivy:
-
-Trivy is an open-source vulnerability scanner designed specifically for container images and file systems. It scans for known CVEs in container images, identifying vulnerabilities in the software packages and libraries included in the image.
-Key Features of Trivy:
-
-Comprehensive Scanning: Scans container images for vulnerabilities in both OS packages and application dependencies.
-Fast and Lightweight: Designed to be quick and easy to use, making it suitable for CI/CD pipelines.
-Integration: Can be integrated into various development workflows to ensure that vulnerabilities are identified early in the development process.
-Usage Example: To scan a container image using Trivy, you would typically run a command like:
-
-bash
-Run
-Copy code
-trivy image <image-name>
-This command will initiate a scan of the specified container image and output a report of any known vulnerabilities found, along with their severity levels.
-
-3. Runtime Intrusion Detection
-Project Falco and Intrusion Detection:
-
-Falco is an open-source runtime security monitoring tool designed for Kubernetes and containerized environments. It detects abnormal behavior and potential security threats in real-time by monitoring system calls and events.
-Key Features of Falco:
-
-Behavioral Monitoring: Analyzes system calls and application behavior to identify suspicious activities, such as unexpected file access or network connections.
-Rule-Based Detection: Uses a set of predefined rules to determine what constitutes abnormal behavior, allowing for customizable security policies.
-Real-Time Alerts: Provides immediate alerts when suspicious activities are detected, enabling rapid response to potential threats.
-Use Cases:
-
-Detecting unauthorized access to sensitive files or directories.
-Monitoring for unexpected network connections from containers.
-Identifying privilege escalation attempts or other anomalous behaviors.
-Usage Example: To run Falco, you would typically deploy it in your Kubernetes cluster, and it would automatically start monitoring system calls. You can view alerts and logs through the Falco dashboard or integrate it with other monitoring tools.
-
-
-
 
 
 
