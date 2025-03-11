@@ -72,14 +72,17 @@ RBAC, or Role-Based Access Control, is a method used to restrict system access t
 ![image](https://github.com/user-attachments/assets/fa5e40bb-069d-4afd-a10b-e8c667ef6f81)
 
 ##### 3. Subjects:
-Subjects are the entities (users, groups, or service accounts) that are granted permissions through RoleBindings or ClusterRoleBindings.
+Subjects are the entities (users, groups, or service accounts) that are granted permissions through RoleBindings or ClusterRoleBindings. They can be specified by their names or by their Kubernetes identities. There are two types of accounts in Kubernetes, a user account and a service account.
+- The user account is used by humans. A user account could be for an administrator accessing the cluster to perform administrative tasks, or a developer accessing the cluster to deploy applications, et cetera.
+- The service accounts are used by machines. A service account could be an account used by an application to interact with the Kubernetes cluster.
 
-To create a service account, run command
+![image](https://github.com/user-attachments/assets/2f8bd9eb-19da-4b94-97b0-e5025cf73cdf)
 
-![image](https://github.com/user-attachments/assets/5d3c4d1f-3b88-4214-b8f6-712b9ff47632)
+In this example, you would create a Role with the necessary permissions (view and create Pods) and a RoleBinding that associates the Role with the user "alice" in the "app-namespace" namespace.
 
+![image](https://github.com/user-attachments/assets/3421ad58-5eff-4ac0-a31e-4b3471c0fc1c)
 
-
+This configuration grants the "alice" user the ability to view and create Pods within the "app-namespace" namespace.
 
 ##### 4. Resources and Verbs:
 - Resources are the objects in Kubernetes (like pods, services, deployments, etc.) that you want to control access to.
@@ -92,11 +95,37 @@ To create a service account, run command
 2. **Authorization**: After authentication, Kubernetes checks the user's permissions against the defined Roles and RoleBindings (or ClusterRoles and ClusterRoleBindings) to determine if the action is allowed.
 3. **Decision**: If the user has the necessary permissions, the action is allowed; otherwise, it is denied.
 
+Example: Jane wants to grant access to the cluster. Jane should have permission to create, list, get, update and delete pods in the development namespace. (Using certificates)
+
+![image](https://github.com/user-attachments/assets/a6e65216-dec1-4114-9e4c-777242e513d3)
+
+A user first create a key, then generate a certificate signing request using the key with her name on it, then sends the request to the administrator.
+
+![image](https://github.com/user-attachments/assets/788d07c6-4fe0-4f00-a756-b8f36f22962b)
+
+The request field is where you specify the certificate signing request sent by the user, but you don't specify it as plaintext. Instead, it must be encoded using the Base64 command. Then move the encoded text into the request field and then submit the request.
+
+![image](https://github.com/user-attachments/assets/a8314400-8b35-4404-a59f-5325cedeb2f4)
+
+![image](https://github.com/user-attachments/assets/76292fb3-eed3-4c37-badd-2989e6b22c9e)
+
+Identify the new request and approve the request by running the **kubectl certificate approve** command.
+
+![image](https://github.com/user-attachments/assets/edfc5420-b48f-422d-b803-e8e3890a2d99)
+
+Next, create a role developer and rolebinding developer-role-binding, run the command:
+
+![image](https://github.com/user-attachments/assets/ba6fb788-1136-4f53-a7e7-0a10f65a5a37)
+
+To verify the permission from kubectl utility tool:
+
+![image](https://github.com/user-attachments/assets/9b93a92c-4405-4e5c-928f-49c4b149b3f5)
+
+
 #### Benefits of RBAC:
 - **Granular Control**: RBAC allows for fine-grained access control, enabling administrators to specify exactly what actions users can perform on specific resources.
 - **Least Privilege Principle**: By assigning only the necessary permissions to users based on their roles, RBAC helps enforce the principle of least privilege, reducing the risk of unauthorized access.
 - **Ease of Management**: Roles and bindings can be easily managed and modified, making it simpler to adapt to changing organizational needs.
-
 
 
 ### 3. Security Auditing Tools  
@@ -104,13 +133,48 @@ To create a service account, run command
 ![image](https://github.com/user-attachments/assets/643383ef-b474-4366-8e05-dee85d332980)
 
 - What is CIS Benchmark?
-**CIS Benchmarks** from the **Center for Internet Security (CIS)** are a set of globally recognized and consensus-driven best practices to help security practitioners implement and manage their cybersecurity defenses
+  
+**CIS Benchmarks** from the **Center for Internet Security (CIS)** are a set of best practices and guidelines developed by the Center for Internet Security (CIS) to help organizations secure their systems and data. These benchmarks provide detailed configuration recommendations for various operating systems, applications, cloud providers, and network devices, aimed at reducing vulnerabilities and enhancing overall security posture.
 
+**Key features:**
+- **Comprehensive Guidelines**: Each benchmark includes a list of security controls and configuration settings.
+- **Consensus-Based**: Developed through collaboration among cybersecurity experts from various sectors.
+- **Regular Updates**: Benchmarks are updated to reflect the latest security threats and best practices.
+- **Free and Open**: Available for organizations of all sizes to access and implement.
+  
 - What is Penetration Testing?
-- Why need tools?  
+
+Penetration Testing (or pen testing) is a simulated cyber attack against a computer system, network, or web application to identify vulnerabilities that could be exploited by malicious actors. The goal is to evaluate the security of the system and assess how well it can withstand an attack.
+
+**Key Aspects:**
+- **Types of Testing**: Black box, white box, and gray box testing.
+- **Phases**: Planning, reconnaissance, scanning, exploitation, post-exploitation, and reporting.
+- **Benefits**: Identifies vulnerabilities, improves security posture, and helps meet compliance requirements.
+
+- Why need tools?
+1. **Efficiency**: Automate the process of identifying vulnerabilities, saving time and resources.
+2. **Accuracy**: Reduce human error in vulnerability assessments and configuration checks.
+3. **Comprehensive Coverage**: Tools can scan large environments and provide a thorough assessment of security posture.
+4. **Continuous Monitoring**: Many tools offer ongoing assessments, helping organizations stay ahead of emerging threats.
+5. **Reporting**: Tools often provide detailed reports that help organizations understand their security status and prioritize remediation efforts.
+
+ 
 - **Demo:**  
   - kube-bench (CIS Benchmark Testing)
-  - kube-hunter (Kubernetes Penetration Testing)  
+    
+   **kube-bench** is a tool that checks whether Kubernetes is deployed securely by running the CIS Kubernetes Benchmark tests. It automates the process of evaluating the security configuration of a Kubernetes cluster against the CIS Benchmark recommendations.
+
+   **Key Features**:
+     - **Automated Checks**: Runs a series of tests to verify compliance with the CIS Kubernetes Benchmark.
+     - **Detailed Reporting**: Provides a report of the findings, including passed and failed checks.
+     - **Remediation Guidance**: Offers recommendations for addressing any identified issues.
+
+  - kube-hunter (Kubernetes Penetration Testing) is a penetration testing tool designed specifically for Kubernetes clusters. It helps identify security vulnerabilities by simulating attacks against the cluster.
+
+    **Key Features**:
+       - **Active Scanning**: Conducts active reconnaissance to find vulnerabilities in the Kubernetes environment.
+       - **Attack Simulation**: Simulates various attack vectors to assess the security of the cluster.
+       - **Detailed Reports**: Provides a report of vulnerabilities found, along with their severity and potential impact.
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -141,6 +205,8 @@ To create a service account, run command
   - OPA Gatekeeper (M9sweeper)
   - kubesec (Evaluates YAML manifests) 
 
+----------------------------------------------------------------------------------------------------------------------
+
 ## Module 4. Code Security  
 ### 1. Vulnerability Scanning & Intrusion Detection  
 - What it does?  (Definitions, Threats, Benefits)
@@ -152,7 +218,7 @@ To create a service account, run command
 ### 3. Runtime Intrusion Detection  
 - **Project Falco** and Intrusion Detection (Detecting abnormal behavior in clusters)  
 
----
+---------------------------------------------------------------------------------------------------------------------------------
 
 ## Why is Falco put in Code Security Scope?  
 - While Falco operates at the **cluster level**, it detects **container breakouts, privilege escalation, and runtime anomalies**.  
