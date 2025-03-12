@@ -162,14 +162,20 @@ Penetration Testing (or pen testing) is a simulated cyber attack against a compu
 **Demo:**  
   - kube-bench (CIS Benchmark Testing)
     
-   **kube-bench** is a tool that checks whether Kubernetes is deployed securely by running the CIS Kubernetes Benchmark tests. It automates the process of evaluating the security configuration of a Kubernetes cluster against the CIS Benchmark recommendations.
+   **kube-bench** is an open-source tool to assess the security of Kubernetes clusters by running checks against the Center for Internet Security (CIS) Kubernetes benchmark. It was developed in GoLang by Aqua Security, a provider of cloud-native security solutions.
 
-   **Key Features**:
-     - **Automated Checks**: Runs a series of tests to verify compliance with the CIS Kubernetes Benchmark.
-     - **Detailed Reporting**: Provides a report of the findings, including passed and failed checks.
-     - **Remediation Guidance**: Offers recommendations for addressing any identified issues.
+   **Kube-bench can help**:
+     - **Cluster hardening:** Kube-bench automates the process of checking the cluster configuration as per the security guidelines outlined in CIS benchmarks.
+     - **Policy Enforcement:** Kube-bech checks for RBAC configuration to ensure the necessary least privileges are applied to service accounts, users, etc. it also checks for pod security standards and secret management.
+     - **Network segmentation:** Kube-bench checks for CNI and its support for network policy to ensure that network policies are defined for all namespaces.
 
-  - kube-hunter (Kubernetes Penetration Testing) is a penetration testing tool designed specifically for Kubernetes clusters. It helps identify security vulnerabilities by simulating attacks against the cluster.
+
+  - **kube-hunter (Kubernetes Penetration Testing)**:
+     - is a penetration testing tool that helps you identify potential security issues in your kubernetes cluster. It scans your cluster for known vulnerabilities, such as exposed ports, insecure configurations, and weak authentication mechanisms.
+     - Kube-hunter is designed to be easy to use, and it provides a simple web interface that allows you to initiate scans and view the results. It also includes a variety of pre-built modules that can be used to scan for specific vulnerabilities or security issues.
+      
+    
+![image](https://github.com/user-attachments/assets/caa52636-a747-4406-841d-72a0081369b4)
 
     **Key Features**:
        - **Active Scanning**: Conducts active reconnaissance to find vulnerabilities in the Kubernetes environment.
@@ -214,6 +220,8 @@ Penetration Testing (or pen testing) is a simulated cyber attack against a compu
 - **Vulnerability Scanning:** The process of identifying security weaknesses and flaws in systems, applications, or networks. It involves automated tools that scan for known vulnerabilities, misconfigurations, and outdated software.
 - **Intrusion Detection:** The practice of monitoring systems or networks for malicious activity or policy violations. It can be done using Intrusion Detection Systems (IDS) that analyze traffic and log data to detect suspicious behavior.
 
+![image](https://github.com/user-attachments/assets/9bd5ce40-d1ed-45a5-88be-d75070b0b9a4)
+
 **Threats:**
 - Exploitation of unpatched software vulnerabilities.
 - Unauthorized access to systems or data.
@@ -236,6 +244,8 @@ CVE (Common Vulnerabilities and Exposures): A publicly disclosed list of known c
 
 **Trivy** is an open-source vulnerability scanner designed specifically for container images and file systems. It scans for known CVEs in container images, identifying vulnerabilities in the software packages and libraries included in the image.
 
+![image](https://github.com/user-attachments/assets/3f19e826-f6da-4d53-a968-071dc1b8a370)
+
 **How it works:**
 1. Trivy scans container images for installed packages, libraries, and configurations.
 2. It cross-references these components with the CVE database.
@@ -251,6 +261,8 @@ CVE (Common Vulnerabilities and Exposures): A publicly disclosed list of known c
 
 **Project Falco:** An open-source runtime security tool designed for cloud-native environments. It specializes in detecting abnormal behavior in containers, Kubernetes clusters, and hosts.
 
+![image](https://github.com/user-attachments/assets/d38ebb2c-3d83-4db6-a91c-822de71dc384)
+
 **How it works:**
 1. Falco uses a kernel module or eBPF (Extended Berkeley Packet Filter) to monitor system calls and events in real time.
 2. It applies customizable rules to detect suspicious activities, such as:
@@ -258,11 +270,6 @@ CVE (Common Vulnerabilities and Exposures): A publicly disclosed list of known c
    - File system modifications.
    - Network connections to malicious IPs.  
 3. Alerts are generated and sent to security teams for investigation.
-
-**Key Features:**
-- Real-time monitoring and detection of runtime threats.
-- Integration with Kubernetes for cluster-wide visibility.
-- Extensible rule engine for custom security policies.
 
 **Benefits:**
 - Provides deep visibility into container and host activities.
@@ -292,7 +299,8 @@ CVE (Common Vulnerabilities and Exposures): A publicly disclosed list of known c
 - **Gatekeeper Introduction:** [Referral Link](https://open-policy-agent.github.io/gatekeeper/website/docs/)
 - **Open Policy Agent Introduction:** [Referral Link](https://www.openpolicyagent.org/)
 - **OPA Gatekeeper: Policy and Governance for Kubernetes:** [Referral Link](https://kubernetes.io/blog/2019/08/06/opa-gatekeeper-policy-and-governance-for-kubernetes/)
-
+- **Kube-hunter:** [Referral Link](https://github.com/aquasecurity/kube-hunter)
+                    [referral Link](https://www.securecodebox.io/docs/scanners/kube-hunter/)
 
 
 
